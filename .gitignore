@@ -99,13 +99,14 @@ local.properties
 # Intellij IDEA
 ################
 # User-specific stuff:
-.idea
+.idea/
 
 # CMake
 cmake-build-debug/
 
 ## File-based project format:
 *.iws
+*.iml
 
 # IntelliJ
 out/
