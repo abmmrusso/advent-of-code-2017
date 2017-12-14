@@ -41,5 +41,5 @@ For example, to run tests for _aoc01_, run
 ### Available sub-projects
 
 - Advent of Code - Day 01: Inverse Captcha
- - Project name: aoc01
- - [README.MD](aoc01/README.MD)
+  - Project name: aoc01
+  - [README.MD](aoc01/README.MD)
