@@ -46,7 +46,7 @@ public class InverseCaptchaMainTest {
                 Arguments.of(null, 0),
                 Arguments.of("", 0),
                 Arguments.of("1", 0),
-                Arguments.of("1332", 3)
+                Arguments.of("1323", 6)
         );
     }
 }

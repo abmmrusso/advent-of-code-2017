@@ -5,9 +5,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.security.InvalidParameterException;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Java6Assertions.assertThatThrownBy;
 
 public class InverseCaptchaTest {
 
@@ -23,6 +25,12 @@ public class InverseCaptchaTest {
         assertThat(testInstance.captchaSolution(new int[]{})).isEqualTo(0);
     }
 
+    @Test
+    public void captchaForOddSizedDigitSequenceThrowsIllegalArgumentException() {
+        assertThatThrownBy(() -> testInstance.captchaSolution(new int[] {1}))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @ParameterizedTest(name = "sequence: {0}")
     @MethodSource("nonRepeatingDigitSequences")
     public void captchaForNonRepeatingDigitSequenceShouldBeZero(int[] captcha) {
@@ -31,18 +39,9 @@ public class InverseCaptchaTest {
 
     static Stream<Arguments> nonRepeatingDigitSequences(){
         return Stream.of(
-                Arguments.of(new int[] {1}),
-                Arguments.of(new int[] {2}),
-                Arguments.of(new int[] {3}),
-                Arguments.of(new int[] {4}),
-                Arguments.of(new int[] {5}),
-                Arguments.of(new int[] {6}),
-                Arguments.of(new int[] {7}),
-                Arguments.of(new int[] {8}),
-                Arguments.of(new int[] {9}),
                 Arguments.of(new int[] {1, 2}),
-                Arguments.of(new int[] {1, 2, 3}),
-                Arguments.of(new int[] {1, 2, 3, 4})
+                Arguments.of(new int[] {1, 2, 3, 4}),
+                Arguments.of(new int[] {1, 2, 3, 4, 5, 6})
         );
     }
 
@@ -54,25 +53,11 @@ public class InverseCaptchaTest {
 
     static Stream<Arguments> repeatingDigitSequences(){
         return Stream.of(
-                Arguments.of(new int[] {1, 1, 2}, 1),
-                Arguments.of(new int[] {2, 2, 3}, 2),
-                Arguments.of(new int[] {1, 1, 2, 2}, 3),
-                Arguments.of(new int[] {1, 1, 1, 2}, 2),
-                Arguments.of(new int[] {1, 1, 1, 1, 2}, 3)
-        );
-    }
-
-    @ParameterizedTest(name = "sequence: {0} | expectedSum: {1}")
-    @MethodSource("circularRepeatingDigitSequences")
-    public void shouldReturnExpectedCaptchaForGivenDigitSequencesContainingCircularRepeatingDigitSequences(int[] captcha, int expectedSum) {
-        assertThat(testInstance.captchaSolution(captcha)).isEqualTo(expectedSum);
-    }
-
-    static Stream<Arguments> circularRepeatingDigitSequences(){
-        return Stream.of(
                 Arguments.of(new int[] {1, 1}, 2),
-                Arguments.of(new int[] {2, 2, 2}, 6),
-                Arguments.of(new int[] {9, 1, 2, 9}, 9)
+                Arguments.of(new int[] {1, 2, 1, 2}, 6),
+                Arguments.of(new int[] {1, 2, 3, 4, 2, 5}, 4),
+                Arguments.of(new int[] {1, 2, 3, 1, 2, 3}, 12),
+                Arguments.of(new int[] {1, 2, 1, 3, 1, 4, 1, 5}, 4)
         );
     }
 }
