@@ -3,7 +3,8 @@ package net.aoc;
 import java.util.stream.IntStream;
 
 public class InverseCaptcha {
-    public int captchaSolution(int[] captcha) {
+
+    public int captchaSolution(int[] captcha, int captchaCycleFactor) {
         if(captcha == null || captcha.length == 0) {
             return 0;
         }
@@ -12,10 +13,8 @@ public class InverseCaptcha {
             throw new IllegalArgumentException();
         }
 
-        int captchaHalfSize = captcha.length / 2;
-
         return IntStream.range(0, captcha.length)
-                .map(idx -> captcha[idx] == captcha[(idx + captchaHalfSize)%captcha.length]?captcha[idx]:0)
+                .map(idx -> captcha[idx] == captcha[(idx + captchaCycleFactor)%captcha.length]?captcha[idx]:0)
                 .sum();
     }
 }

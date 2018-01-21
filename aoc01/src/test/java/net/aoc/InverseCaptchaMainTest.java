@@ -1,23 +1,19 @@
 package net.aoc;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 public class InverseCaptchaMainTest {
 
     private InverseCaptcha mockInvertedCaptcha = mock(InverseCaptcha.class);
+    private InverseCaptchaArgs testInvertedCaptchaArgs = new InverseCaptchaArgs();
     private InverseCaptchaMain testInstance = new InverseCaptchaMain(mockInvertedCaptcha);
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
@@ -31,22 +27,41 @@ public class InverseCaptchaMainTest {
         System.setOut(null);
     }
 
-    @ParameterizedTest(name = "Input digit sequence: {0} | expected captcha: {1}")
-    @MethodSource("inputData")
-    public void shouldOutputInverseCaptchaForGivenDigitSequence(String inputDigitSequence, int expectedCaptcha) {
-        final int[] inputDigitArray = inputDigitSequence == null? null: inputDigitSequence.chars().mapToObj(c -> (char)c).mapToInt(c -> Integer.parseInt("" + c)).toArray();
-        when(mockInvertedCaptcha.captchaSolution(inputDigitArray)).thenReturn(expectedCaptcha);
-        testInstance.inverseCaptcha(inputDigitSequence);
-        assertThat(outContent.toString()).isEqualTo(String.format("%d%n", expectedCaptcha));
-        verify(mockInvertedCaptcha).captchaSolution(inputDigitArray);
+    @Test
+    public void shouldGenerateInvertedCaptchaWithDefaultCycleFactorOfHalfTheSizeOfCaptchaString() {
+        final int[] captchaDigits = new int[] {1, 3, 2, 3};
+        final int expectedCycleFactor = captchaDigits.length/2;
+        final int expectedInverseCaptcha = 6;
+        testInvertedCaptchaArgs.setCaptcha(captchaDigits);
+        runInvertedCaptchaTestLogic(testInvertedCaptchaArgs, expectedCycleFactor, expectedInverseCaptcha);
     }
 
-    static Stream<Arguments> inputData() {
-        return Stream.of(
-                Arguments.of(null, 0),
-                Arguments.of("", 0),
-                Arguments.of("1", 0),
-                Arguments.of("1323", 6)
-        );
+    @Test
+    public void shouldGenerateInvertedCaptchaWithProvidedCycleFactorOfHalfTheSizeOfCaptchaString() {
+        final int[] captchaDigits = new int[] {1, 1, 2, 2};
+        final int expectedCycleFactor = 1;
+        final int expectedInverseCaptcha = 3;
+        testInvertedCaptchaArgs.setCaptcha(captchaDigits);
+        testInvertedCaptchaArgs.setCycleFactor(expectedCycleFactor);
+        runInvertedCaptchaTestLogic(testInvertedCaptchaArgs, expectedCycleFactor, expectedInverseCaptcha);
+    }
+
+    private void runInvertedCaptchaTestLogic(final InverseCaptchaArgs argsToUse, final int expectedCycleFactor, final int expectedInverseCaptcha) {
+        when(mockInvertedCaptcha.captchaSolution(argsToUse.getCaptcha(), expectedCycleFactor)).thenReturn(expectedInverseCaptcha);
+        testInstance.inverseCaptcha(testInvertedCaptchaArgs);
+        assertThat(outContent.toString()).isEqualTo(String.format("%d%n", expectedInverseCaptcha));
+        verify(mockInvertedCaptcha).captchaSolution(argsToUse.getCaptcha(), expectedCycleFactor);
+    }
+
+    @Test
+    public void shouldTriggerUsageOutputIfWrongParameters() {
+        InverseCaptchaMain.main(new String[] { InverseCaptchaArgs.CAPTCHA_OPTION });
+        assertThat(outContent.toString()).contains(InverseCaptchaArgs.CAPTCHA_OPTION);
+    }
+
+    @Test
+    public void endToEndInverseCaptchaGenerationTest() {
+        InverseCaptchaMain.main(new String[] { InverseCaptchaArgs.CAPTCHA_OPTION, "1323"});
+        assertThat(outContent.toString()).isEqualTo(String.format("%d%n", 6));
     }
 }

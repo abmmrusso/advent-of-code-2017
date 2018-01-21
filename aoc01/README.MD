@@ -44,10 +44,18 @@
 
 Run the Gradle _run_ task using the wrapper at the root of the whole Advent of Code project as follows
 ```
-./gradlew aoc01:run -Pcaptcha="<captcha_value>"
+./gradlew aoc01:run -PappArgs="[ '--captcha', '<captcha_value>' ]"
 ```
-
 For example, for captcha "1111", run
 ```
-./gradlew aoc01:run -Pcaptcha="1111"
+./gradlew aoc01:run -PappArgs=[ '--captcha', '1111' ]"
+```
+
+By default, cycle factor is set to half the size of the given captcha. Howeverm you can override it by also setting the '--cycleFactor' parameter
+```
+./gradlew aoc01:run -PappArgs="[ '--captcha', '<captcha_value>', '--cycleFactor', '<desiredCycleFactor>' ]"
+```
+For example, for captcha "1122" with cycle factor "1", run
+```
+./gradlew aoc01:run -PappArgs=[ '--captcha', '1122', '--cycleFactor', '1' ]"
 ```

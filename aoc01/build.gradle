@@ -1,9 +1,13 @@
 buildscript {
     repositories {
         jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.2'
+        classpath 'io.franzbecker:gradle-lombok:1.11'
     }
 }
 
@@ -12,12 +16,14 @@ apply plugin: 'application'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'org.junit.platform.gradle.plugin'
+apply plugin: 'io.franzbecker.gradle-lombok'
 
 repositories {
     jcenter()
 }
 
 dependencies {
+    compile 'com.beust:jcommander:1.72'
     testCompile 'org.junit.jupiter:junit-jupiter-engine:5.0.2'
     testCompile 'org.junit.jupiter:junit-jupiter-params:5.0.2'
     testCompile 'org.assertj:assertj-core:3.8.0'
@@ -25,9 +31,14 @@ dependencies {
     testCompile "org.mockito:mockito-core:2.13.0"
 }
 
+lombok {
+    version = '1.16.20'
+    sha256 = ""
+}
+
 mainClassName = "net.aoc.InverseCaptchaMain"
 run {
-    if (project.hasProperty("captcha")) {
-        args Eval.me(captcha)
+    if (project.hasProperty("appArgs")) {
+        args Eval.me(appArgs)
     }
 }
