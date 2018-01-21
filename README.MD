@@ -1,6 +1,8 @@
 # Advent of Code 2017
 
-This project compiles all efforts done to complete 2017's Advent of code as seen at http://adventofcode.com/2017
+This project compiles all efforts done to complete 2017's Advent of code as seen at [http://adventofcode.com/2017] .
+
+The motivation to tackle these exercises is to play/study several different technology elements like different coding languages and frameworks.
 
 ## Building/Running
 
@@ -43,3 +45,6 @@ For example, to run tests for _aoc01_, run
 - Advent of Code - Day 01: Inverse Captcha
   - Project name: aoc01
   - [README.MD](aoc01/README.MD)
+  - Tehcnology studied during this exercise:
+    - [JUnit5](http://junit.org/junit5/)
+    - [JCommander](http://www.jcommander.org/)
