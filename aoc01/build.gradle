@@ -32,7 +32,7 @@ dependencies {
 }
 
 lombok {
-    version = '1.16.20'
+    version = '1.18.2'
     sha256 = ""
 }
 
