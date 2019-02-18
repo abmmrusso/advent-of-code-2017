@@ -1,6 +1,6 @@
 # Advent of Code 2017
 
-This project compiles all efforts done to complete 2017's Advent of code as seen at [http://adventofcode.com/2017] .
+This project compiles all efforts done to complete 2017's Advent of code as seen at http://adventofcode.com/2017.
 
 The motivation to tackle these exercises is to play/study several different technology elements like different coding languages and frameworks.
 

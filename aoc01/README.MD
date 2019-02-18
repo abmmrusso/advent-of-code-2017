@@ -51,7 +51,7 @@ For example, for captcha "1111", run
 ./gradlew aoc01:run -PappArgs=[ '--captcha', '1111' ]"
 ```
 
-By default, cycle factor is set to half the size of the given captcha. Howeverm you can override it by also setting the '--cycleFactor' parameter
+By default, cycle factor is set to half the size of the given captcha. However, you can override it by also setting the '--cycleFactor' parameter
 ```
 ./gradlew aoc01:run -PappArgs="[ '--captcha', '<captcha_value>', '--cycleFactor', '<desiredCycleFactor>' ]"
 ```
