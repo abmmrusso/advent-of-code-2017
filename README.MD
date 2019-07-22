@@ -45,6 +45,11 @@ For example, to run tests for _aoc01_, run
 - Advent of Code - Day 01: Inverse Captcha
   - Project name: aoc01
   - [README.MD](aoc01/README.MD)
-  - Tehcnology studied during this exercise:
+  - Technology studied during this exercise:
     - [JUnit5](http://junit.org/junit5/)
     - [JCommander](http://www.jcommander.org/)
+- Advent of Code - Day 02: Corruption Checksum
+  - Project name: aoc02
+  - [README.MD](aoc02/README.MD)
+  - Technology studied during this exercise:
+    - [Kotlin](https://kotlinlang.org/)
