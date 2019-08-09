@@ -53,3 +53,4 @@ For example, to run tests for _aoc01_, run
   - [README.MD](aoc02/README.MD)
   - Technology studied during this exercise:
     - [Kotlin](https://kotlinlang.org/)
+    - [Mockk](https://github.com/mockk/mockk)

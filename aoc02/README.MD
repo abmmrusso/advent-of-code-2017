@@ -16,20 +16,51 @@
 >  - The second row's largest and smallest values are 7 and 3, and their difference is 4.
 >  - The third row's difference is 6.
 >
->  In this example, the spreadsheet's checksum would be 8 + 4 + 6 = 18.
+> In this example, the spreadsheet's checksum would be 8 + 4 + 6 = 18.
 >
->  What is the checksum for the spreadsheet in your puzzle input?
+> What is the checksum for the spreadsheet in your puzzle input?
+>
+> --- Part Two ---
+>
+> "Great work; looks like we're on the right track after all. Here's a star for your effort." However, the program seems a little worried. Can programs be worried?
+>
+> "Based on what we're seeing, it looks like all the User wanted is some information about the evenly divisible values in the spreadsheet. Unfortunately, none of us are equipped for that kind of calculation - most of us specialize in bitwise operations."
+>
+> It sounds like the goal is to find the only two numbers in each row where one evenly divides the other - that is, where the result of the division operation is a whole number. They would like you to find those numbers on each line, divide them, and add up each line's result.
+>
+> For example, given the following spreadsheet:
+>
+>     5 9 2 8
+>     9 4 7 3
+>     3 8 6 5
+>
+> In the first row, the only two numbers that evenly divide are 8 and 2; the result of this division is 4.
+>
+> In the second row, the two numbers are 9 and 3; the result is 3.
+>
+> In the third row, the result is 2.
+>
+> In this example, the sum of the results would be 4 + 3 + 2 = 9.
+>
+> What is the sum of each row's result in your puzzle input?
+
 
 
 ## Running this
 
 Run the Gradle _run_ task using the wrapper at the root of the whole Advent of Code project as follows
 ```
-./gradlew aoc02:run -PappArgs="[ '<path to the data file>' ]"
+./gradlew aoc02:run -PappArgs="[ '<path to the data file>' ,'<row checksum operation type> ]"
 ```
-For example, for calculating the checksum of the spreadsheet data in file "/home/user/spreadsheet.txt", run
+For example, for calculating the checksum of the spreadsheet data in file "/home/user/spreadsheet.txt" using the "DIFF"
+row checksum op type, run
 ```
-./gradlew aoc02:run -PappArgs=[ '/home/user/spreadsheet.txt' ]"
+./gradlew aoc02:run -PappArgs=[ '/home/user/spreadsheet.txt', 'DIFF' ]"
 ```
+
+### Supported row checksum types
+* `DIFF` - Applies the difference between max and min elements of a row as described for Part 1 in the Intro.
+* `EVEN_DIV` - - Applies the even division between max and min divisable elements of a row as described
+   for Part 2 in the Intro.
 
 The provided file should consist of lines of numbers, each separated with a tab character like seen in [input.1](input.1). 
